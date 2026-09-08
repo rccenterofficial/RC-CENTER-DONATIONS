@@ -1,461 +1,2720 @@
-<!DOCTYPE html>
+   <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#8f1520">
-<meta name="description" content="RC Center Ganesh Committee Management App">
-<title>RC Center • Ganesh Committee</title>
-<style>
-:root{
-  --red:#941724;--red2:#c12a38;--gold:#d9a441;--gold2:#f3cf72;
-  --cream:#fff9ef;--paper:#fffdf9;--ink:#241b18;--muted:#786d68;
-  --line:#eadfd3;--green:#16845b;--danger:#c73535;--shadow:0 18px 50px rgba(57,25,16,.12);
-  --radius:22px;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;background:#f6eee4;color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif}
-button,input,select{font:inherit}
-button{cursor:pointer;border:0}
-.app{min-height:100vh}
-.topbar{position:sticky;top:0;z-index:30;background:rgba(255,253,249,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.topbar-inner{max-width:1180px;margin:auto;padding:12px 18px;display:flex;align-items:center;gap:12px}
-.brand{display:flex;align-items:center;gap:10px;flex:1}
-.logo{width:42px;height:42px;border-radius:14px;background:linear-gradient(145deg,var(--red2),var(--red));color:white;display:grid;place-items:center;font-weight:900;box-shadow:0 7px 18px #94172433}
-.brand strong{display:block;font-size:16px}.brand span{display:block;font-size:11px;color:var(--muted)}
-.icon-btn{width:42px;height:42px;border-radius:14px;background:#f4eae0;color:var(--ink);position:relative}
-.icon-btn:hover{transform:translateY(-1px)}
-.badge{position:absolute;right:5px;top:4px;background:var(--red2);color:white;border:2px solid white;border-radius:99px;font-size:9px;padding:1px 5px}
-.container{max-width:1180px;margin:auto;padding:20px 18px 100px}
-.hero{position:relative;overflow:hidden;border-radius:30px;padding:26px;color:white;background:radial-gradient(circle at 90% 15%,#e4b94f66,transparent 35%),linear-gradient(135deg,#70101a,#a91d2b 60%,#7b111d);box-shadow:var(--shadow);margin-bottom:18px}
-.hero:after{content:"ॐ";position:absolute;right:18px;bottom:-35px;font-size:170px;opacity:.08;font-family:serif}
-.hero small{opacity:.75}.hero h1{margin:5px 0 6px;font-size:clamp(25px,5vw,42px);letter-spacing:-1px}.hero p{margin:0;color:#ffe9cf;max-width:650px}
-.hero-row{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;position:relative;z-index:1}
-.progress-wrap{margin-top:22px;max-width:640px}.progress-head{display:flex;justify-content:space-between;font-size:12px;margin-bottom:7px;color:#ffe9cf}
-.progress{height:10px;background:#ffffff26;border-radius:20px;overflow:hidden}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold2),#fff);border-radius:20px;transition:width 1s}
-.hero-actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
-.btn{padding:11px 15px;border-radius:14px;background:white;color:var(--red);font-weight:800}.btn.gold{background:var(--gold);color:#321f0b}.btn.ghost{background:#ffffff18;color:white;border:1px solid #ffffff35}
-.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
-.card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:0 8px 30px #48271608}
-.metric{padding:18px;min-height:122px;transition:.2s}.metric:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
-.metric .label{color:var(--muted);font-size:12px}.metric .value{font-size:25px;font-weight:900;margin:7px 0}.metric .sub{font-size:11px;color:var(--green)}
-.section-title{display:flex;align-items:center;justify-content:space-between;margin:24px 2px 10px}.section-title h2{font-size:18px;margin:0}.link{color:var(--red);font-weight:800;font-size:12px;background:none}
-.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{padding:15px;border-radius:18px;background:var(--paper);border:1px solid var(--line);font-weight:800;color:var(--ink);box-shadow:0 7px 20px #48271608;transition:.18s}.quick button:hover{transform:translateY(-2px)}.quick .qicon{display:block;font-size:23px;margin-bottom:7px}
-.columns{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
-.panel{padding:18px}
-.activity{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}.activity:last-child{border:0}.avatar{width:42px;height:42px;border-radius:14px;display:grid;place-items:center;background:#f7e8dc;color:var(--red);font-weight:900}.activity-main{flex:1}.activity-main strong{display:block;font-size:13px}.activity-main span{font-size:11px;color:var(--muted)}.amt{font-weight:900;font-size:13px}.amt.in{color:var(--green)}.amt.out{color:var(--danger)}
-.program{padding:14px;border-radius:18px;background:linear-gradient(135deg,#fff4dd,#fffdf8);border:1px solid #efdcb5;margin-bottom:10px}.program b{display:block}.program span{font-size:12px;color:var(--muted)}
-.searchbar{display:flex;gap:8px;margin-top:16px}.searchbar input{flex:1;border:1px solid var(--line);background:var(--paper);border-radius:15px;padding:13px 15px;outline:none}.searchbar input:focus{border-color:var(--gold)}
-.view{display:none}.view.active{display:block}
-.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:12px}.table th,.table td{padding:13px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}.table th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.5px}.actions{display:flex;gap:5px}.mini{padding:7px 9px;border-radius:10px;background:#f4eae0;font-size:11px}.mini.danger{color:var(--danger)}
-.filter-row{display:flex;gap:7px;overflow:auto;padding-bottom:4px}.chip{padding:8px 12px;border-radius:99px;background:#f1e7dc;color:var(--muted);white-space:nowrap;font-size:11px;font-weight:800}.chip.active{background:var(--red);color:white}
-.member-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.member{padding:17px}.member-head{display:flex;gap:10px;align-items:center}.member h3{font-size:14px;margin:0}.member p{font-size:11px;color:var(--muted);margin:3px 0}.member .member-total{font-size:20px;font-weight:900;margin-top:14px}.member-actions{display:flex;gap:7px;margin-top:12px}.member-actions button{flex:1;padding:9px;border-radius:11px;background:#f5eae0;font-size:11px;font-weight:800}
-.more-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.setting{padding:18px;display:flex;align-items:center;justify-content:space-between}.setting strong{display:block}.setting span{font-size:11px;color:var(--muted)}.switch{width:48px;height:28px;border-radius:99px;background:#d8cbc0;padding:3px}.switch i{display:block;width:22px;height:22px;border-radius:50%;background:white;transition:.2s}.switch.on{background:var(--green)}.switch.on i{transform:translateX(20px)}
-.bottom{position:fixed;z-index:35;bottom:0;left:0;right:0;background:rgba(255,253,249,.94);backdrop-filter:blur(18px);border-top:1px solid var(--line);display:flex;justify-content:center}.bottom-inner{width:min(620px,100%);display:grid;grid-template-columns:repeat(5,1fr);padding:7px 8px calc(7px + env(safe-area-inset-bottom))}.nav{background:none;color:#8d8179;padding:7px 3px;border-radius:13px;font-size:10px}.nav b{display:block;font-size:18px;margin-bottom:2px}.nav.active{color:var(--red);background:#f9eee5}
-.fab{position:fixed;right:20px;bottom:82px;z-index:36;width:58px;height:58px;border-radius:20px;background:linear-gradient(145deg,var(--gold2),var(--gold));color:#4a2a0d;font-size:28px;box-shadow:0 12px 28px #6b351c33;transition:.2s}.fab.open{transform:rotate(45deg)}
-.fab-menu{position:fixed;right:20px;bottom:148px;z-index:35;display:grid;gap:8px;opacity:0;pointer-events:none;transform:translateY(12px);transition:.2s}.fab-menu.open{opacity:1;pointer-events:auto;transform:none}.fab-item{display:flex;align-items:center;gap:8px;justify-content:flex-end}.fab-item span{background:var(--paper);padding:8px 10px;border-radius:11px;font-size:11px;font-weight:800;box-shadow:var(--shadow)}.fab-item button{width:42px;height:42px;border-radius:14px;background:var(--red);color:white}
-.overlay{position:fixed;inset:0;background:#20120d66;z-index:70;display:none;align-items:flex-end;justify-content:center;padding:12px}.overlay.show{display:flex}.modal{width:min(620px,100%);max-height:92vh;overflow:auto;background:var(--paper);border-radius:26px 26px 16px 16px;padding:20px;box-shadow:0 30px 80px #0005;animation:up .22s ease}.modal.center{align-self:center;border-radius:26px}@keyframes up{from{transform:translateY(20px);opacity:0}to{transform:none;opacity:1}}
-.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.modal-head h2{margin:0;font-size:19px}.close{width:36px;height:36px;border-radius:12px;background:#f2e8df}
-.form{display:grid;gap:11px}.field label{font-size:11px;font-weight:800;color:var(--muted);display:block;margin-bottom:5px}.field input,.field select{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:white;outline:none}.field input:focus,.field select:focus{border-color:var(--gold)}
-.amount-presets{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.amount-presets button{padding:10px;border-radius:11px;background:#f7ede4;font-weight:800;font-size:11px}.amount-presets button:hover{background:#f0ddc9}
-.segment{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;background:#f1e7dd;padding:4px;border-radius:13px}.segment button{padding:9px;background:transparent;border-radius:10px;font-size:11px;font-weight:800;color:var(--muted)}.segment button.active{background:white;color:var(--red);box-shadow:0 2px 7px #0000000c}
-.form-actions{display:flex;gap:8px;margin-top:7px}.form-actions button{flex:1;padding:13px;border-radius:14px;font-weight:900}.primary{background:var(--red);color:white}.secondary{background:#f1e7dd;color:var(--ink)}
-.toast{position:fixed;left:50%;bottom:92px;z-index:100;transform:translate(-50%,20px);background:#211612;color:white;padding:11px 15px;border-radius:13px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;box-shadow:var(--shadow)}.toast.show{opacity:1;transform:translate(-50%,0)}
-.drawer{position:fixed;right:0;top:0;bottom:0;width:min(430px,94%);z-index:80;background:var(--paper);transform:translateX(100%);transition:.25s;box-shadow:-20px 0 70px #0002;padding:20px;overflow:auto}.drawer.show{transform:none}.drawer-backdrop{position:fixed;inset:0;background:#20120d55;z-index:75;display:none}.drawer-backdrop.show{display:block}
-.receipt{background:white;border:1px dashed #cdbfb3;border-radius:17px;padding:20px;text-align:center}.receipt .rlogo{font-size:28px;font-weight:1000;color:var(--red)}.receipt hr{border:0;border-top:1px dashed #d9cec4;margin:15px 0}.receipt-row{display:flex;justify-content:space-between;padding:6px 0;font-size:12px}.receipt-total{font-size:24px;font-weight:1000;color:var(--red)}
-.empty{text-align:center;padding:35px 10px;color:var(--muted);font-size:12px}
-.spinner{display:inline-block;width:15px;height:15px;border:2px solid #ffffff66;border-top-color:white;border-radius:50%;animation:spin .6s linear infinite;vertical-align:middle}@keyframes spin{to{transform:rotate(360deg)}}
-.search-results{display:grid;gap:7px}.result{padding:12px;border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between}.result small{color:var(--muted)}
-@media(max-width:850px){.grid4{grid-template-columns:repeat(2,1fr)}.columns{grid-template-columns:1fr}.member-grid{grid-template-columns:1fr 1fr}.hero-row{display:block}}
-@media(max-width:560px){.container{padding:14px 12px 95px}.grid4{gap:8px}.metric{padding:14px;min-height:105px}.metric .value{font-size:21px}.quick{grid-template-columns:repeat(2,1fr)}.member-grid,.more-grid{grid-template-columns:1fr}.hero{padding:21px;border-radius:24px}.hero h1{font-size:28px}.topbar-inner{padding-left:12px;padding-right:12px}.brand strong{font-size:14px}.searchbar{margin-top:12px}.amount-presets{grid-template-columns:repeat(2,1fr)}}
-
-.auth-screen{position:fixed;inset:0;z-index:200;background:linear-gradient(135deg,#70101a,#a91d2b);display:none;align-items:center;justify-content:center;padding:18px}.auth-screen.show{display:flex}.auth-box{width:min(430px,100%);background:var(--paper);border-radius:28px;padding:24px;box-shadow:0 30px 80px #0005}.auth-logo{width:64px;height:64px;border-radius:20px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:1000;font-size:22px;margin:auto}.auth-box h1{text-align:center;margin:14px 0 5px}.auth-box p{text-align:center;color:var(--muted);font-size:12px;margin:0 0 18px}.cloud-status{font-size:10px;color:var(--green);font-weight:800;margin-top:8px;text-align:center}.user-pill{font-size:10px;color:var(--muted);margin-right:4px;display:none}
-</style>
-</head>
-<body>
-<div class="app">
-<header class="topbar">
-  <div class="topbar-inner">
-    <div class="brand"><div class="logo">RC</div><div><strong>RC Center</strong><span>Ganesh Committee</span></div></div>
-    <button class="icon-btn" onclick="openSearch()">⌕</button>
-    <button class="icon-btn" onclick="openNotifications()">♢<em class="badge">3</em></button>
-    <button class="icon-btn" onclick="openSettings()">⚙</button>
-  </div>
-</header>
-
-<main class="container">
-  <section id="homeView" class="view active">
-    <div class="hero">
-      <div class="hero-row">
-        <div>
-          <small>2026 • RC Center</small>
-          <h1>Ganesh Committee Dashboard</h1>
-          <p>Track collections, expenses, donors and receipts from one simple place.</p>
-          <div class="hero-actions">
-            <button class="btn gold" onclick="openCollection()">＋ Add Collection</button>
-            <button class="btn ghost" onclick="openExpense()">＋ Add Expense</button>
-          </div>
-          <div class="progress-wrap">
-            <div class="progress-head"><span>Collection Target</span><b id="targetText">₹0 / ₹5,00,000</b></div>
-            <div class="progress"><i id="targetBar"></i></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="grid4">
-      <button class="card metric" onclick="openFinance('collections')"><div class="label">Total Collection</div><div class="value" id="totalCollection">₹0</div><div class="sub">↗ Tap for details</div></button>
-      <button class="card metric" onclick="openFinance('expenses')"><div class="label">Total Expenses</div><div class="value" id="totalExpense">₹0</div><div class="sub">↗ Tap for details</div></button>
-      <button class="card metric" onclick="openFinance('balance')"><div class="label">Available Balance</div><div class="value" id="balance">₹0</div><div class="sub">Live calculation</div></button>
-      <button class="card metric" onclick="showMembers()"><div class="label">Donors</div><div class="value" id="donorCount">0</div><div class="sub">↗ View donor list</div></button>
-    </div>
-
-    <div class="section-title"><h2>Quick Actions</h2><button class="link" onclick="openMore()">View all</button></div>
-    <div class="quick">
-      <button onclick="openCollection()"><span class="qicon">💰</span>Add Collection</button>
-      <button onclick="openExpense()"><span class="qicon">🧾</span>Add Expense</button>
-      <button onclick="openQR()"><span class="qicon">▦</span>UPI QR</button>
-      <button onclick="openReceiptPicker()"><span class="qicon">🧾</span>Receipt</button>
-    </div>
-
-    <div class="searchbar"><input id="homeSearch" placeholder="Search donors, collections, expenses…" oninput="globalSearch(this.value)"><button class="btn" onclick="openSearch()">Search</button></div>
-    <div id="searchInline" style="display:none;margin-top:10px"></div>
-
-    <div class="columns">
-      <section>
-        <div class="section-title"><h2>Recent Activity</h2><button class="link" onclick="showCollections()">See all</button></div>
-        <div class="card panel" id="recentActivity"></div>
-      </section>
-      <section>
-        <div class="section-title"><h2>Today’s Program</h2><button class="link" onclick="openMore()">More</button></div>
-        <div class="card panel">
-          <div class="program"><b>🙏 Ganesh Pooja</b><span>Morning • RC Center Mandap</span></div>
-          <div class="program"><b>🍚 Annadanam</b><span>9:30 AM • Community Hall</span></div>
-          <div class="program"><b>🎵 Evening Bhajans</b><span>7:00 PM • RC Center</span></div>
-        </div>
-      </section>
-    </div>
-  </section>
-
-  <section id="collectionsView" class="view">
-    <div class="section-title"><h2>Collections</h2><button class="btn" onclick="openCollection()">＋ Add</button></div>
-    <div class="card panel">
-      <div class="filter-row">
-        <button class="chip active" onclick="filterCollection('all',this)">All</button>
-        <button class="chip" onclick="filterCollection('Cash',this)">Cash</button>
-        <button class="chip" onclick="filterCollection('UPI',this)">UPI</button>
-        <button class="chip" onclick="filterCollection('Bank',this)">Bank</button>
-      </div>
-      <div class="table-wrap"><table class="table"><thead><tr><th>Donor</th><th>Amount</th><th>Method</th><th>Date</th><th></th></tr></thead><tbody id="collectionTable"></tbody></table></div>
-    </div>
-  </section>
-
-  <section id="expensesView" class="view">
-    <div class="section-title"><h2>Expenses</h2><button class="btn" onclick="openExpense()">＋ Add</button></div>
-    <div class="card panel">
-      <div class="filter-row">
-        <button class="chip active" onclick="filterExpense('all',this)">All</button>
-        <button class="chip" onclick="filterExpense('Decoration',this)">Decoration</button>
-        <button class="chip" onclick="filterExpense('Food',this)">Food</button>
-        <button class="chip" onclick="filterExpense('Sound',this)">Sound</button>
-        <button class="chip" onclick="filterExpense('Other',this)">Other</button>
-      </div>
-      <div class="table-wrap"><table class="table"><thead><tr><th>Item</th><th>Amount</th><th>Category</th><th>Date</th><th></th></tr></thead><tbody id="expenseTable"></tbody></table></div>
-    </div>
-  </section>
-
-  <section id="membersView" class="view">
-    <div class="section-title"><h2>Donors & Members</h2><button class="btn" onclick="openDonor()">＋ Add Donor</button></div>
-    <div class="card panel">
-      <div class="searchbar" style="margin:0"><input id="memberSearch" placeholder="Search donor…" oninput="renderMembers(this.value)"></div>
-    </div>
-    <div class="member-grid" id="memberGrid" style="margin-top:12px"></div>
-  </section>
-
-  <section id="moreView" class="view">
-    <div class="section-title"><h2>More</h2></div>
-    <div class="more-grid">
-      <button class="card setting" onclick="exportBackup()"><div><strong>💾 Backup Data</strong><span>Download JSON backup</span></div><b>›</b></button>
-      <button class="card setting" onclick="exportCSV()"><div><strong>📊 Export CSV</strong><span>Open data in Excel</span></div><b>›</b></button>
-      <button class="card setting" onclick="openQR()"><div><strong>▦ UPI QR</strong><span>Show collection QR</span></div><b>›</b></button>
-      <button class="card setting" onclick="openReceiptPicker()"><div><strong>🧾 Receipts</strong><span>Preview / print receipts</span></div><b>›</b></button>
-      <button class="card setting" onclick="openSettings()"><div><strong>⚙ Settings</strong><span>Theme, language & preferences</span></div><b>›</b></button>
-      <button class="card setting" onclick="restoreBackup()"><div><strong>↥ Restore Backup</strong><span>Restore a JSON backup</span></div><b>›</b></button>
-    </div>
-    <div class="card panel" style="margin-top:12px">
-      <strong>🔐 Prototype data safety</strong>
-      <p style="font-size:12px;color:var(--muted);line-height:1.6">This V2 demo stores data in your browser using localStorage. Use <b>Backup Data</b> regularly. For production, connect the same UI to Supabase with authentication and Row Level Security.</p>
-      <div style="font-size:11px;color:var(--green)" id="backupStatus">Local storage enabled</div>
-    </div>
-  </section>
-</main>
-
-<div class="auth-screen" id="authScreen"><div class="auth-box"><div class="auth-logo">RC</div><h1>RC Center</h1><p>Secure cloud-connected committee dashboard</p><form class="form" onsubmit="authSubmit(event)"><div class="field"><label>EMAIL</label><input id="authEmail" type="email" required placeholder="committee@email.com"></div><div class="field"><label>PASSWORD</label><input id="authPassword" type="password" minlength="6" required placeholder="Minimum 6 characters"></div><div class="form-actions"><button class="primary" id="authButton">Sign In</button></div></form><button class="link" style="width:100%;margin-top:10px" onclick="toggleAuthMode()" id="authToggle">Create account</button><div class="cloud-status" id="cloudStatus"></div></div></div>
-<div class="bottom"><div class="bottom-inner">
-  <button class="nav active" data-view="home" onclick="navigate('home')"><b>⌂</b>Home</button>
-  <button class="nav" data-view="collections" onclick="navigate('collections')"><b>₹</b>Collections</button>
-  <button class="nav" data-view="expenses" onclick="navigate('expenses')"><b>🧾</b>Expenses</button>
-  <button class="nav" data-view="members" onclick="navigate('members')"><b>♙</b>Members</button>
-  <button class="nav" data-view="more" onclick="navigate('more')"><b>☷</b>More</button>
-</div></div>
-
-<div class="fab-menu" id="fabMenu">
-  <div class="fab-item"><span>New Donor</span><button onclick="openDonor();toggleFab()">♙</button></div>
-  <div class="fab-item"><span>Receipt</span><button onclick="openReceiptPicker();toggleFab()">🧾</button></div>
-  <div class="fab-item"><span>Expense</span><button onclick="openExpense();toggleFab()">−</button></div>
-  <div class="fab-item"><span>Collection</span><button onclick="openCollection();toggleFab()">＋</button></div>
-</div>
-<button class="fab" id="fab" onclick="toggleFab()">＋</button>
-
-<div class="overlay" id="overlay" onclick="if(event.target===this)closeModal()"><div class="modal" id="modal"></div></div>
-<div class="drawer-backdrop" id="drawerBackdrop" onclick="closeDrawer()"></div>
-<aside class="drawer" id="drawer"></aside>
-<div class="toast" id="toast"></div>
-<input type="file" id="restoreInput" accept="application/json" hidden>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RC Center - Donation Management</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f6fb;
+    color: #172033;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* HEADER */
+
+header {
+    background: linear-gradient(135deg, #5b21b6, #7c3aed, #9333ea);
+    color: white;
+    padding: 18px 5%;
+    box-shadow: 0 4px 15px rgba(0,0,0,.15);
+}
+
+.header-inner {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.logo span {
+    display: block;
+    font-size: 12px;
+    opacity: .85;
+    margin-top: 3px;
+}
+
+.header-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.header-actions button {
+    border: 1px solid rgba(255,255,255,.4);
+    background: rgba(255,255,255,.12);
+    color: white;
+    padding: 9px 14px;
+    border-radius: 9px;
+}
+
+/* MAIN */
+
+main {
+    max-width: 1200px;
+    margin: auto;
+    padding: 25px 15px 50px;
+}
+
+/* STATUS */
+
+.status {
+    padding: 12px 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background: white;
+    border-left: 5px solid #7c3aed;
+    box-shadow: 0 2px 8px rgba(0,0,0,.06);
+}
+
+.status.success {
+    border-color: #16a34a;
+}
+
+.status.error {
+    border-color: #dc2626;
+}
+
+.status.warning {
+    border-color: #f59e0b;
+}
+
+/* CARDS */
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.card {
+    background: white;
+    padding: 22px;
+    border-radius: 15px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.07);
+}
+
+.card small {
+    color: #64748b;
+}
+
+.amount {
+    font-size: 30px;
+    font-weight: 800;
+    margin-top: 8px;
+}
+
+.green {
+    color: #16a34a;
+}
+
+.red {
+    color: #dc2626;
+}
+
+.purple {
+    color: #7c3aed;
+}
+
+/* SECTIONS */
+
+.section {
+    background: white;
+    border-radius: 15px;
+    padding: 22px;
+    margin-bottom: 22px;
+    box-shadow: 0 5px 18px rgba(0,0,0,.07);
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.section-title h2 {
+    font-size: 20px;
+}
+
+/* FORM */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.form-group.full {
+    grid-column: 1 / -1;
+}
+
+label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    border: 1px solid #d7dce5;
+    border-radius: 9px;
+    padding: 11px 12px;
+    background: white;
+    outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 3px rgba(124,58,237,.1);
+}
+
+textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+/* BUTTONS */
+
+.btn {
+    border: none;
+    padding: 11px 16px;
+    border-radius: 9px;
+    font-weight: 700;
+}
+
+.btn-primary {
+    background: #7c3aed;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #6d28d9;
+}
+
+.btn-success {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-secondary {
+    background: #e5e7eb;
+    color: #111827;
+}
+
+.btn-small {
+    padding: 7px 10px;
+    font-size: 12px;
+}
+
+.form-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+/* TABLE */
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+th,
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #edf0f5;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #f8fafc;
+    font-weight: 800;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+/* AUTH */
+
+.auth-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,.72);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    z-index: 1000;
+}
+
+.auth-box {
+    width: 100%;
+    max-width: 430px;
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+
+.auth-box h1 {
+    margin-bottom: 5px;
+}
+
+.auth-box p {
+    color: #64748b;
+    margin-bottom: 20px;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.auth-tabs button {
+    flex: 1;
+    padding: 11px;
+    border: none;
+    background: transparent;
+    border-bottom: 3px solid transparent;
+}
+
+.auth-tabs button.active {
+    color: #7c3aed;
+    border-color: #7c3aed;
+    font-weight: 700;
+}
+
+.auth-message {
+    padding: 10px;
+    border-radius: 8px;
+    background: #f1f5f9;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* MODAL */
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,.65);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    z-index: 900;
+}
+
+.modal-box {
+    background: white;
+    width: 100%;
+    max-width: 500px;
+    border-radius: 16px;
+    padding: 25px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.close {
+    border: none;
+    background: #f1f5f9;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+}
+
+/* LOGIN INFO */
+
+.cloud-info {
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 9px;
+    margin: 12px 0;
+    font-size: 14px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.badge-admin {
+    background: #ede9fe;
+    color: #6d28d9;
+}
+
+.badge-user {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.empty {
+    text-align: center;
+    padding: 25px;
+    color: #64748b;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 800px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-group.full {
+        grid-column: auto;
+    }
+
+    .header-inner {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            🕉️ RC CENTER
+            <span>Donation & Festival Management</span>
+        </div>
+
+        <div class="header-actions">
+            <button onclick="openSettings()">⚙️ Settings</button>
+            <button id="authButton" onclick="openAuth()">🔐 Login</button>
+            <button id="logoutButton" class="hidden" onclick="logout()">Logout</button>
+        </div>
+    </div>
+</header>
+
+<main>
+
+    <div id="status" class="status">
+        Initializing application...
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div class="cards">
+
+        <div class="card">
+            <small>Total Collections</small>
+            <div id="totalCollections" class="amount green">₹0</div>
+        </div>
+
+        <div class="card">
+            <small>Total Expenses</small>
+            <div id="totalExpenses" class="amount red">₹0</div>
+        </div>
+
+        <div class="card">
+            <small>Remaining Balance</small>
+            <div id="balance" class="amount purple">₹0</div>
+        </div>
+
+    </div>
+
+    <!-- ADD COLLECTION -->
+
+    <section class="section admin-only hidden">
+
+        <div class="section-title">
+            <h2>➕ Add Donation / Collection</h2>
+        </div>
+
+        <form id="collectionForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Donor Name</label>
+                    <input id="donor" required placeholder="Enter donor name">
+                </div>
+
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input id="collectionAmount" type="number" min="1" step="0.01" required placeholder="₹ Amount">
+                </div>
+
+                <div class="form-group">
+                    <label>Payment Method</label>
+                    <select id="collectionMethod">
+                        <option value="UPI">UPI</option>
+                        <option value="Cash">Cash</option>
+                        <option value="Bank">Bank</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input id="collectionDate" type="date" required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Note</label>
+                    <textarea id="collectionNote" placeholder="Optional note"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-success" type="submit">
+                    Save Donation
+                </button>
+
+                <button class="btn btn-secondary" type="button" onclick="resetCollectionForm()">
+                    Clear
+                </button>
+            </div>
+
+        </form>
+
+    </section>
+
+    <!-- ADD EXPENSE -->
+
+    <section class="section admin-only hidden">
+
+        <div class="section-title">
+            <h2>➕ Add Expense</h2>
+        </div>
+
+        <form id="expenseForm">
+
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Expense Item</label>
+                    <input id="expenseItem" required placeholder="Example: Decoration">
+                </div>
+
+                <div class="form-group">
+                    <label>Amount</label>
+                    <input id="expenseAmount" type="number" min="1" step="0.01" required placeholder="₹ Amount">
+                </div>
+
+                <div class="form-group">
+                    <label>Category</label>
+                    <select id="expenseCategory">
+                        <option value="Decoration">Decoration</option>
+                        <option value="Food">Food</option>
+                        <option value="Pooja">Pooja</option>
+                        <option value="Sound">Sound</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Date</label>
+                    <input id="expenseDate" type="date" required>
+                </div>
+
+                <div class="form-group full">
+                    <label>Note</label>
+                    <textarea id="expenseNote" placeholder="Optional note"></textarea>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-danger" type="submit">
+                    Save Expense
+                </button>
+
+                <button class="btn btn-secondary" type="button" onclick="resetExpenseForm()">
+                    Clear
+                </button>
+            </div>
+
+        </form>
+
+    </section>
+
+    <!-- COLLECTION TABLE -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>💰 Collections</h2>
+
+            <button class="btn btn-secondary btn-small" onclick="loadCloud()">
+                🔄 Refresh
+            </button>
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Donor</th>
+                        <th>Amount</th>
+                        <th>Method</th>
+                        <th>Date</th>
+                        <th>Note</th>
+                        <th class="admin-only hidden">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="collectionsTable">
+                    <tr>
+                        <td colspan="6" class="empty">
+                            No collections found.
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <!-- EXPENSE TABLE -->
+
+    <section class="section">
+
+        <div class="section-title">
+            <h2>💸 Expenses</h2>
+        </div>
+
+        <div class="table-wrap">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th>Note</th>
+                        <th class="admin-only hidden">Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody id="expensesTable">
+                    <tr>
+                        <td colspan="6" class="empty">
+                            No expenses found.
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- AUTH MODAL -->
+
+<div id="authModal" class="auth-overlay hidden">
+
+    <div class="auth-box">
+
+        <h1>RC Center Login</h1>
+        <p>Sign in to access cloud data and administration.</p>
+
+        <div class="auth-tabs">
+
+            <button id="loginTab" class="active" onclick="switchAuth('login')">
+                Login
+            </button>
+
+            <button id="signupTab" onclick="switchAuth('signup')">
+                Create Account
+            </button>
+
+        </div>
+
+        <div id="authMessage" class="auth-message hidden"></div>
+
+        <form id="authForm">
+
+            <div class="form-group">
+                <label>Email</label>
+                <input id="authEmail" type="email" required placeholder="admin@example.com">
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input id="authPassword" type="password" minlength="6" required placeholder="Minimum 6 characters">
+            </div>
+
+            <div class="form-actions">
+
+                <button id="authSubmit" class="btn btn-primary" type="submit">
+                    Login
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="closeAuth()">
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- SETTINGS MODAL -->
+
+<div id="settingsModal" class="modal hidden">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2>⚙️ Supabase Settings</h2>
+            <button class="close" onclick="closeSettings()">×</button>
+        </div>
+
+        <div class="cloud-info">
+            <strong>Cloud Status:</strong>
+            <span id="cloudStatus">Not connected</span>
+        </div>
+
+        <div class="cloud-info">
+            <strong>Current Account:</strong>
+            <span id="currentAccount">Not logged in</span>
+        </div>
+
+        <form id="settingsForm">
+
+            <div class="form-group">
+                <label>Supabase Project URL</label>
+                <input
+                    id="supabaseUrl"
+                    type="url"
+                    placeholder="https://your-project.supabase.co"
+                    required
+                >
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Supabase Publishable / Anon Key</label>
+                <input
+                    id="supabaseKey"
+                    type="password"
+                    placeholder="sb_publishable_..."
+                    required
+                >
+            </div>
+
+            <div class="form-actions">
+
+                <button class="btn btn-primary" type="submit">
+                    Save Connection
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="closeSettings()">
+                    Close
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- EDIT COLLECTION -->
+
+<div id="editCollectionModal" class="modal hidden">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2>Edit Collection</h2>
+            <button class="close" onclick="closeEditCollection()">×</button>
+        </div>
+
+        <form id="editCollectionForm">
+
+            <input type="hidden" id="editCollectionId">
+
+            <div class="form-group">
+                <label>Donor Name</label>
+                <input id="editDonor" required>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <input id="editCollectionAmount" type="number" min="1" step="0.01" required>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Payment Method</label>
+                <select id="editCollectionMethod">
+                    <option value="UPI">UPI</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Bank">Bank</option>
+                </select>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Date</label>
+                <input id="editCollectionDate" type="date" required>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Note</label>
+                <textarea id="editCollectionNote"></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-primary" type="submit">
+                    Update
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="closeEditCollection()">
+                    Cancel
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<!-- EDIT EXPENSE -->
+
+<div id="editExpenseModal" class="modal hidden">
+
+    <div class="modal-box">
+
+        <div class="modal-header">
+            <h2>Edit Expense</h2>
+            <button class="close" onclick="closeEditExpense()">×</button>
+        </div>
+
+        <form id="editExpenseForm">
+
+            <input type="hidden" id="editExpenseId">
+
+            <div class="form-group">
+                <label>Item</label>
+                <input id="editExpenseItem" required>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Amount</label>
+                <input id="editExpenseAmount" type="number" min="1" step="0.01" required>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Category</label>
+                <select id="editExpenseCategory">
+                    <option value="Decoration">Decoration</option>
+                    <option value="Food">Food</option>
+                    <option value="Pooja">Pooja</option>
+                    <option value="Sound">Sound</option>
+                    <option value="Transport">Transport</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Date</label>
+                <input id="editExpenseDate" type="date" required>
+            </div>
+
+            <br>
+
+            <div class="form-group">
+                <label>Note</label>
+                <textarea id="editExpenseNote"></textarea>
+            </div>
+
+            <div class="form-actions">
+
+                <button class="btn btn-primary" type="submit">
+                    Update
+                </button>
+
+                <button type="button" class="btn btn-secondary" onclick="closeEditExpense()">
+                    Cancel
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
 <script>
-const SUPABASE_URL = localStorage.getItem(' https://frvhxamwelykfttkkqss.supabase.co') || '';
-const SUPABASE_KEY = localStorage.getItem(' sb_publishable_kRy0nx6DfaA8zLdxaIdiYw_FK2yJSzm') || '';
-const supabase = (SUPABASE_URL && SUPABASE_KEY) ? window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}) : null;
-let currentUser=null;
-const KEY='rc_center_v2_data';
-const TARGET=500000;
-let data=loadData(), collectionFilter='all', expenseFilter='all', selectedPayment='UPI', editingId=null;
+/* =========================================================
+   RC CENTER DONATION MANAGEMENT
+   SUPABASE + AUTH + CLOUD CRUD
+   ========================================================= */
 
-function seed(){
- return {
-  collections:[
-   {id:1,donor:'Ravi Kumar',amount:5000,method:'UPI',date:'2026-09-07',note:'Main contribution'},
-   {id:2,donor:'Suresh & Family',amount:2500,method:'Cash',date:'2026-09-06',note:''},
-   {id:3,donor:'Team RC',amount:10000,method:'Bank',date:'2026-09-05',note:'Committee fund'},
-   {id:4,donor:'Lakshmi Devi',amount:1000,method:'UPI',date:'2026-09-04',note:''}
-  ],
-  expenses:[
-   {id:11,item:'Mandap Decoration',amount:3500,category:'Decoration',date:'2026-09-06',note:''},
-   {id:12,item:'Annadanam Materials',amount:2200,category:'Food',date:'2026-09-06',note:''},
-   {id:13,item:'Sound System Advance',amount:1800,category:'Sound',date:'2026-09-05',note:''}
-  ]
- };
-}
-function loadData(){try{return JSON.parse(localStorage.getItem(KEY))||seed()}catch(e){return seed()}}
-async function save(){localStorage.setItem(KEY,JSON.stringify(data));document.getElementById('backupStatus').textContent='Saved locally • '+new Date().toLocaleTimeString();if(supabase&&currentUser){await syncCloud();}renderAll()}
-async function syncCloud(){
- try{
-  const {error:cErr}=await supabase.from('collections').upsert(data.collections.map(x=>({id:x.id,donor:x.donor,amount:x.amount,method:x.method,date:x.date,note:x.note||'',user_id:currentUser.id})),{onConflict:'id'});
-  if(cErr) throw cErr;
-  const {error:eErr}=await supabase.from('expenses').upsert(data.expenses.map(x=>({id:x.id,item:x.item,amount:x.amount,category:x.category,date:x.date,note:x.note||'',user_id:currentUser.id})),{onConflict:'id'});
-  if(eErr) throw eErr;
-  document.getElementById('backupStatus').textContent='☁ Synced to Supabase • '+new Date().toLocaleTimeString();
- }catch(e){console.error(e);toast('Cloud sync failed — local copy kept');}
-}
-async function loadCloud(){
- if(!supabase||!currentUser)return;
- try{
-  const {data:c,error:cErr}=await supabase.from('collections').select('*').order('id',{ascending:false});
-  const {data:e,error:eErr}=await supabase.from('expenses').select('*').order('id',{ascending:false});
-  if(cErr)throw cErr;if(eErr)throw eErr;
-  data={collections:(c||[]).map(x=>({id:x.id,donor:x.donor,amount:Number(x.amount),method:x.method,date:x.date,note:x.note||''})),expenses:(e||[]).map(x=>({id:x.id,item:x.item,amount:Number(x.amount),category:x.category,date:x.date,note:x.note||''}))};
-  localStorage.setItem(KEY,JSON.stringify(data));renderAll();document.getElementById('backupStatus').textContent='☁ Cloud data loaded • '+new Date().toLocaleTimeString();
- }catch(e){console.error(e);toast('Could not load cloud data');}
-}
-async function deleteCloud(table,id){if(!supabase||!currentUser)return;try{const {error}=await supabase.from(table).delete().eq('id',id);if(error)throw error}catch(e){toast('Cloud delete failed')}}
-function money(n){return '₹'+Number(n||0).toLocaleString('en-IN')}
-function dateFmt(d){return new Date(d+'T00:00:00').toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})}
-function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]))}
-function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.tt);window.tt=setTimeout(()=>t.classList.remove('show'),2300)}
+/*
+IMPORTANT:
 
-function renderAll(){
- const total=data.collections.reduce((a,x)=>a+x.amount,0), exp=data.expenses.reduce((a,x)=>a+x.amount,0);
- animateValue('totalCollection',total);animateValue('totalExpense',exp);animateValue('balance',total-exp);
- const donors=[...new Set(data.collections.map(x=>x.donor.trim()).filter(Boolean))];
- animateValue('donorCount',donors.length,false);
- document.getElementById('targetText').textContent=money(total)+' / '+money(TARGET);
- document.getElementById('targetBar').style.width=Math.min(100,total/TARGET*100)+'%';
- renderActivity();renderCollections();renderExpenses();renderMembers();
-}
-function animateValue(id,target,currency=true){
- const el=document.getElementById(id); if(!el)return;
- const start=Number(el.dataset.val||0), duration=450, t0=performance.now();
- function tick(t){let p=Math.min(1,(t-t0)/duration),v=Math.round(start+(target-start)*p);el.textContent=currency?money(v):v; if(p<1)requestAnimationFrame(tick);else el.dataset.val=target}
- requestAnimationFrame(tick)
-}
-function renderActivity(){
- const items=[
-  ...data.collections.map(x=>({...x,type:'in',title:x.donor,desc:x.method+' • Collection'})),
-  ...data.expenses.map(x=>({...x,type:'out',title:x.item,desc:x.category+' • Expense'}))
- ].sort((a,b)=>b.id-a.id).slice(0,7);
- document.getElementById('recentActivity').innerHTML=items.length?items.map(x=>`
- <div class="activity" onclick="${x.type==='in'?`openReceipt(${x.id})`:`openExpenseDetail(${x.id})`}">
-  <div class="avatar">${x.type==='in'?'₹':'−'}</div><div class="activity-main"><strong>${esc(x.title)}</strong><span>${esc(x.desc)} • ${dateFmt(x.date)}</span></div><div class="amt ${x.type}">${x.type==='in'?'+':'−'}${money(x.amount)}</div>
- </div>`).join(''):'<div class="empty">No activity yet.</div>'
-}
-function renderCollections(){
- const rows=data.collections.filter(x=>collectionFilter==='all'||x.method===collectionFilter).sort((a,b)=>b.id-a.id);
- document.getElementById('collectionTable').innerHTML=rows.length?rows.map(x=>`<tr><td><b>${esc(x.donor)}</b><br><small>${esc(x.note||'')}</small></td><td class="amt in">${money(x.amount)}</td><td>${x.method}</td><td>${dateFmt(x.date)}</td><td><div class="actions"><button class="mini" onclick="openReceipt(${x.id})">View</button><button class="mini danger" onclick="deleteCollection(${x.id})">Delete</button></div></td></tr>`).join(''):`<tr><td colspan="5"><div class="empty">No collections found.</div></td></tr>`
-}
-function renderExpenses(){
- const rows=data.expenses.filter(x=>expenseFilter==='all'||x.category===expenseFilter).sort((a,b)=>b.id-a.id);
- document.getElementById('expenseTable').innerHTML=rows.length?rows.map(x=>`<tr><td><b>${esc(x.item)}</b><br><small>${esc(x.note||'')}</small></td><td class="amt out">−${money(x.amount)}</td><td>${x.category}</td><td>${dateFmt(x.date)}</td><td><div class="actions"><button class="mini" onclick="openExpenseDetail(${x.id})">View</button><button class="mini danger" onclick="deleteExpense(${x.id})">Delete</button></div></td></tr>`).join(''):`<tr><td colspan="5"><div class="empty">No expenses found.</div></td></tr>`
-}
-function renderMembers(q=''){
- const map={};data.collections.forEach(x=>{map[x.donor]=(map[x.donor]||0)+x.amount});
- const arr=Object.entries(map).filter(([n])=>n.toLowerCase().includes(q.toLowerCase())).sort((a,b)=>b[1]-a[1]);
- document.getElementById('memberGrid').innerHTML=arr.length?arr.map(([name,total],i)=>`<div class="card member"><div class="member-head"><div class="avatar">${esc(name[0]?.toUpperCase()||'?')}</div><div><h3>${esc(name)}</h3><p>Donor #${i+1}</p></div></div><div class="member-total">${money(total)}</div><div class="member-actions"><button onclick="callDonor('${esc(name)}')">Call</button><button onclick="whatsappDonor('${esc(name)}')">WhatsApp</button><button onclick="donorHistory('${esc(name)}')">History</button></div></div>`).join(''):'<div class="card panel empty" style="grid-column:1/-1">No donors found.</div>'
-}
-function navigate(view){
- document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
- document.getElementById(view+'View').classList.add('active');
- document.querySelectorAll('.nav').forEach(n=>n.classList.toggle('active',n.dataset.view===view));
- window.scrollTo({top:0,behavior:'smooth'});
-}
-function showCollections(){navigate('collections')}
-function showMembers(){navigate('members')}
-function openMore(){navigate('more')}
-function filterCollection(v,b){collectionFilter=v;document.querySelectorAll('#collectionsView .chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderCollections()}
-function filterExpense(v,b){expenseFilter=v;document.querySelectorAll('#expensesView .chip').forEach(x=>x.classList.remove('active'));b.classList.add('active');renderExpenses()}
+Do NOT put a service_role / sb_secret key here.
 
-function openModal(content,center=false){document.getElementById('modal').innerHTML=content;document.querySelector('.modal').classList.toggle('center',center);document.getElementById('overlay').classList.add('show')}
-function closeModal(){document.getElementById('overlay').classList.remove('show');editingId=null}
-function openCollection(){
- selectedPayment='UPI';
- openModal(`<div class="modal-head"><h2>💰 Add Collection</h2><button class="close" onclick="closeModal()">×</button></div>
- <form class="form" onsubmit="submitCollection(event)">
-  <div class="field"><label>DONOR NAME</label><input id="cDonor" required placeholder="Enter donor name" list="donorList"><datalist id="donorList">${[...new Set(data.collections.map(x=>x.donor))].map(x=>`<option>${esc(x)}</option>`).join('')}</datalist></div>
-  <div class="field"><label>AMOUNT</label><input id="cAmount" type="number" min="1" required placeholder="₹ Amount"></div>
-  <div class="amount-presets">${[100,500,1000,2000].map(x=>`<button type="button" onclick="setAmount(${x})">${money(x)}</button>`).join('')}</div>
-  <div class="field"><label>PAYMENT METHOD</label><div class="segment">${['UPI','Cash','Bank'].map(x=>`<button type="button" id="pay-${x}" class="${x==='UPI'?'active':''}" onclick="selectPayment('${x}')">${x}</button>`).join('')}</div></div>
-  <div class="field"><label>NOTE (OPTIONAL)</label><input id="cNote" placeholder="Purpose / reference"></div>
-  <div class="form-actions"><button type="button" class="secondary" onclick="closeModal()">Cancel</button><button class="primary">Save Collection</button></div>
- </form>`)
-}
-function setAmount(x){document.getElementById('cAmount').value=x}
-function selectPayment(x){selectedPayment=x;['UPI','Cash','Bank'].forEach(v=>document.getElementById('pay-'+v).classList.toggle('active',v===x))}
-function submitCollection(e){e.preventDefault();data.collections.push({id:Date.now(),donor:document.getElementById('cDonor').value.trim(),amount:+document.getElementById('cAmount').value,method:selectedPayment,date:new Date().toISOString().slice(0,10),note:document.getElementById('cNote').value.trim()});save();closeModal();toast('✓ Collection saved');setTimeout(()=>openReceipt(data.collections.at(-1).id),250)}
+The publishable/anon key is designed for browser applications.
+Database security must be handled with Supabase RLS.
+*/
 
-function openExpense(){
- openModal(`<div class="modal-head"><h2>🧾 Add Expense</h2><button class="close" onclick="closeModal()">×</button></div>
- <form class="form" onsubmit="submitExpense(event)">
-  <div class="field"><label>ITEM / EXPENSE</label><input id="eItem" required placeholder="e.g. Flowers, sound, food"></div>
-  <div class="field"><label>AMOUNT</label><input id="eAmount" type="number" min="1" required placeholder="₹ Amount"></div>
-  <div class="amount-presets">${[500,1000,2000,5000].map(x=>`<button type="button" onclick="document.getElementById('eAmount').value=${x}">${money(x)}</button>`).join('')}</div>
-  <div class="field"><label>CATEGORY</label><select id="eCat"><option>Decoration</option><option>Food</option><option>Sound</option><option>Transport</option><option>Other</option></select></div>
-  <div class="field"><label>NOTE</label><input id="eNote" placeholder="Vendor / bill reference"></div>
-  <div class="form-actions"><button type="button" class="secondary" onclick="closeModal()">Cancel</button><button class="primary">Save Expense</button></div>
- </form>`)
-}
-function submitExpense(e){e.preventDefault();data.expenses.push({id:Date.now(),item:document.getElementById('eItem').value.trim(),amount:+document.getElementById('eAmount').value,category:document.getElementById('eCat').value,date:new Date().toISOString().slice(0,10),note:document.getElementById('eNote').value.trim()});save();closeModal();toast('✓ Expense saved')}
+/* ---------------------------------------------------------
+   CONFIGURATION
+--------------------------------------------------------- */
 
-function openDonor(){
- openModal(`<div class="modal-head"><h2>♙ Add Donor</h2><button class="close" onclick="closeModal()">×</button></div>
- <form class="form" onsubmit="submitDonor(event)">
-  <div class="field"><label>DONOR NAME</label><input id="dName" required placeholder="Full name"></div>
-  <div class="field"><label>FIRST CONTRIBUTION (OPTIONAL)</label><input id="dAmount" type="number" min="0" placeholder="₹ Amount"></div>
-  <div class="field"><label>PAYMENT METHOD</label><select id="dMethod"><option>UPI</option><option>Cash</option><option>Bank</option></select></div>
-  <div class="form-actions"><button type="button" class="secondary" onclick="closeModal()">Cancel</button><button class="primary">Save Donor</button></div>
- </form>`)
-}
-function submitDonor(e){e.preventDefault();let name=document.getElementById('dName').value.trim(),amount=+document.getElementById('dAmount').value||0;if(amount)data.collections.push({id:Date.now(),donor:name,amount,method:document.getElementById('dMethod').value,date:new Date().toISOString().slice(0,10),note:'New donor'});save();closeModal();toast('✓ Donor added');navigate('members')}
+const DEFAULT_SUPABASE_URL =
+    "https://frvhxamwelykfttkkqss.supabase.co";
 
-function openReceipt(id){
- const x=data.collections.find(a=>a.id===id);if(!x)return;
- openModal(`<div class="modal-head"><h2>Receipt Preview</h2><button class="close" onclick="closeModal()">×</button></div>
- <div class="receipt"><div class="rlogo">RC CENTER</div><div>GANESH COMMITTEE</div><hr><div class="receipt-row"><span>Receipt No.</span><b>RC-${String(x.id).slice(-6)}</b></div><div class="receipt-row"><span>Donor</span><b>${esc(x.donor)}</b></div><div class="receipt-row"><span>Date</span><b>${dateFmt(x.date)}</b></div><div class="receipt-row"><span>Payment</span><b>${x.method}</b></div><hr><div>Contribution</div><div class="receipt-total">${money(x.amount)}</div><hr><small>Thank you for supporting RC Center Ganesh Committee 🙏</small></div>
- <div class="form-actions" style="margin-top:12px"><button class="secondary" onclick="closeModal()">Close</button><button class="primary" onclick="printReceipt(${x.id})">🖨 Print Receipt</button></div>`,true)
-}
-function openReceiptPicker(){
- if(!data.collections.length){toast('No collection receipts yet');return}
- openModal(`<div class="modal-head"><h2>🧾 Select Receipt</h2><button class="close" onclick="closeModal()">×</button></div><div class="search-results">${data.collections.slice().reverse().map(x=>`<button class="result" onclick="closeModal();openReceipt(${x.id})"><span><b>${esc(x.donor)}</b><br><small>${dateFmt(x.date)} • ${x.method}</small></span><b>${money(x.amount)}</b></button>`).join('')}</div>`)
-}
-function printReceipt(id){
- const x=data.collections.find(a=>a.id===id);if(!x)return;
- const w=window.open('','_blank','width=420,height=650');w.document.write(`<html><head><title>RC Receipt</title><style>body{font-family:Arial;padding:30px;text-align:center}.r{border:1px dashed #999;padding:25px}.logo{font-size:28px;font-weight:900;color:#941724}.row{display:flex;justify-content:space-between;padding:8px 0}.total{font-size:26px;font-weight:900;color:#941724}
-.auth-screen{position:fixed;inset:0;z-index:200;background:linear-gradient(135deg,#70101a,#a91d2b);display:none;align-items:center;justify-content:center;padding:18px}.auth-screen.show{display:flex}.auth-box{width:min(430px,100%);background:var(--paper);border-radius:28px;padding:24px;box-shadow:0 30px 80px #0005}.auth-logo{width:64px;height:64px;border-radius:20px;background:var(--red);color:#fff;display:grid;place-items:center;font-weight:1000;font-size:22px;margin:auto}.auth-box h1{text-align:center;margin:14px 0 5px}.auth-box p{text-align:center;color:var(--muted);font-size:12px;margin:0 0 18px}.cloud-status{font-size:10px;color:var(--green);font-weight:800;margin-top:8px;text-align:center}.user-pill{font-size:10px;color:var(--muted);margin-right:4px;display:none}
-</style></head><body><div class="r"><div class="logo">RC CENTER</div><b>GANESH COMMITTEE</b><hr><div class="row"><span>Receipt</span><b>RC-${String(x.id).slice(-6)}</b></div><div class="row"><span>Donor</span><b>${esc(x.donor)}</b></div><div class="row"><span>Date</span><b>${dateFmt(x.date)}</b></div><div class="row"><span>Method</span><b>${x.method}</b></div><hr><div>Contribution</div><div class="total">${money(x.amount)}</div><hr><p>Thank you 🙏</p></div><script>window.print()<\/script></body></html>`);w.document.close()
-}
-function openExpenseDetail(id){
- const x=data.expenses.find(a=>a.id===id);if(!x)return;
- openModal(`<div class="modal-head"><h2>Expense Details</h2><button class="close" onclick="closeModal()">×</button></div><div class="receipt" style="text-align:left"><div class="receipt-row"><span>Item</span><b>${esc(x.item)}</b></div><div class="receipt-row"><span>Amount</span><b class="amt out">${money(x.amount)}</b></div><div class="receipt-row"><span>Category</span><b>${x.category}</b></div><div class="receipt-row"><span>Date</span><b>${dateFmt(x.date)}</b></div><div class="receipt-row"><span>Note</span><b>${esc(x.note||'—')}</b></div></div><div class="form-actions"><button class="secondary" onclick="closeModal()">Close</button><button class="primary" onclick="deleteExpense(${id});closeModal()">Delete Expense</button></div>`)
-}
-function deleteCollection(id){if(confirm('Delete this collection?')){data.collections=data.collections.filter(x=>x.id!==id);save();deleteCloud('collections',id);toast('Collection deleted')}}
-function deleteExpense(id){if(confirm('Delete this expense?')){data.expenses=data.expenses.filter(x=>x.id!==id);save();deleteCloud('expenses',id);toast('Expense deleted')}}
+/*
+Leave this blank.
 
-function openFinance(type){
- const total=data.collections.reduce((a,x)=>a+x.amount,0),exp=data.expenses.reduce((a,x)=>a+x.amount,0);
- let title=type==='collections'?'Collection Details':type==='expenses'?'Expense Details':'Balance Summary';
- let body=type==='collections'?`<div class="receipt-row"><span>Total collections</span><b class="amt in">${money(total)}</b></div><hr>${data.collections.slice().reverse().slice(0,8).map(x=>`<div class="receipt-row"><span>${esc(x.donor)}<small style="display:block;color:#888">${x.method} • ${dateFmt(x.date)}</small></span><b>${money(x.amount)}</b></div>`).join('')}`:
- type==='expenses'?`<div class="receipt-row"><span>Total expenses</span><b class="amt out">${money(exp)}</b></div><hr>${data.expenses.slice().reverse().slice(0,8).map(x=>`<div class="receipt-row"><span>${esc(x.item)}<small style="display:block;color:#888">${x.category} • ${dateFmt(x.date)}</small></span><b>${money(x.amount)}</b></div>`).join('')}`:
- `<div class="receipt"><div>Collections</div><div class="receipt-total">${money(total)}</div><div>− Expenses</div><div class="receipt-total">${money(exp)}</div><hr><div>Available Balance</div><div class="receipt-total">${money(total-exp)}</div></div>`;
- openModal(`<div class="modal-head"><h2>${title}</h2><button class="close" onclick="closeModal()">×</button></div>${body}<div class="form-actions"><button class="primary" onclick="closeModal()">Done</button></div>`)
+Enter your NEW Supabase publishable key in:
+Settings -> Supabase Connection
+*/
+
+const DEFAULT_SUPABASE_KEY = "";
+
+/*
+ADMIN EMAIL
+
+Change this to the email account that should be treated
+as the RC Center administrator.
+
+Example:
+const ADMIN_EMAIL = "youradmin@gmail.com";
+*/
+
+const ADMIN_EMAIL = "rccenterofficial@gmail.com";
+
+
+/* ---------------------------------------------------------
+   GLOBAL VARIABLES
+--------------------------------------------------------- */
+
+let supabaseClient = null;
+let currentUser = null;
+let isAdmin = false;
+let authMode = "login";
+
+let collections = [];
+let expenses = [];
+
+
+/* ---------------------------------------------------------
+   STORAGE KEYS
+--------------------------------------------------------- */
+
+const URL_STORAGE_KEY = "rc_supabase_url";
+const KEY_STORAGE_KEY = "rc_supabase_key";
+
+
+/* ---------------------------------------------------------
+   HELPERS
+--------------------------------------------------------- */
+
+function $(id) {
+    return document.getElementById(id);
 }
 
-function openSearch(){
- openModal(`<div class="modal-head"><h2>⌕ Global Search</h2><button class="close" onclick="closeModal()">×</button></div><div class="field"><input id="globalInput" autofocus placeholder="Search anything…" oninput="renderGlobalResults(this.value)"></div><div id="globalResults" class="search-results" style="margin-top:10px"><div class="empty">Type to search donors, collections and expenses.</div></div>`)
+function formatMoney(value) {
+    return "₹" + Number(value || 0).toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
 }
-function globalSearch(q){
- const box=document.getElementById('searchInline');if(!q.trim()){box.style.display='none';return}
- box.style.display='block';const results=getResults(q);box.innerHTML=`<div class="card panel">${results.length?results.slice(0,5).map(resultHTML).join(''):'<div class="empty">No results.</div>'}</div>`
-}
-function renderGlobalResults(q){document.getElementById('globalResults').innerHTML=getResults(q).map(resultHTML).join('')||'<div class="empty">No results.</div>'}
-function getResults(q){
- q=q.toLowerCase().trim();if(!q)return[];
- return [...data.collections.map(x=>({kind:'Collection',name:x.donor,amount:x.amount,date:x.date,method:x.method,id:x.id})),...data.expenses.map(x=>({kind:'Expense',name:x.item,amount:x.amount,date:x.date,method:x.category,id:x.id}))].filter(x=>(x.name+' '+x.kind+' '+x.method).toLowerCase().includes(q)).sort((a,b)=>b.id-a.id)
-}
-function resultHTML(x){return `<button class="result" onclick="${x.kind==='Collection'?`closeModal();openReceipt(${x.id})`:`closeModal();openExpenseDetail(${x.id})`}"><span><b>${esc(x.name)}</b><br><small>${x.kind} • ${x.method} • ${dateFmt(x.date)}</small></span><b>${money(x.amount)}</b></button>`}
 
-function openQR(){
- openModal(`<div class="modal-head"><h2>▦ UPI Collection QR</h2><button class="close" onclick="closeModal()">×</button></div><div style="text-align:center"><div style="width:220px;height:220px;margin:10px auto;background:repeating-conic-gradient(#111 0 25%,#fff 0 50%) 0/22px 22px;border:14px solid white;box-shadow:0 0 0 1px #ddd"></div><h3>RC Center Ganesh Committee</h3><p style="font-size:12px;color:var(--muted)">Demo QR area. Replace this with your real UPI QR image/UPI ID in production.</p><button class="primary" style="width:100%;padding:13px;border-radius:14px" onclick="toast('Share link ready');navigator.clipboard?.writeText(location.href)">Share Collection Page</button></div>`,true)
+function today() {
+    return new Date().toISOString().split("T")[0];
 }
-function openNotifications(){
- openDrawer(`<div class="modal-head"><h2>Notifications</h2><button class="close" onclick="closeDrawer()">×</button></div><div class="program"><b>🔔 New collection recorded</b><span>Recent donor contribution was saved.</span></div><div class="program"><b>💾 Backup reminder</b><span>Download a backup after major updates.</span></div><div class="program"><b>🎯 Target progress</b><span>${Math.round(data.collections.reduce((a,x)=>a+x.amount,0)/TARGET*100)}% of collection target reached.</span></div>`)
-}
-function openSettings(){
- openDrawer(`<div class="modal-head"><h2>Settings</h2><button class="close" onclick="closeDrawer()">×</button></div>
- <div class="card setting"><div><strong>Cloud Account</strong><span>${currentUser?esc(currentUser.email):'Not signed in'}</span></div>${currentUser?`<button class="mini" onclick="signOut()">Sign out</button>`:`<button class="mini" onclick="closeDrawer();showAuth()">Sign in</button>`}</div><div class="card setting" style="margin-top:10px"><div><strong>Dark Mode</strong><span>Switch appearance</span></div><button class="switch" id="darkSwitch" onclick="toggleDark()"><i></i></button></div>
- <div class="card setting" style="margin-top:10px"><div><strong>Language</strong><span>English / తెలుగు</span></div><button class="mini" onclick="toast('Language switch demo')">English</button></div>
- <div class="card setting" style="margin-top:10px"><div><strong>Local Data</strong><span>Saved in this browser</span></div><b>✓</b></div>
- <div class="card panel" style="margin-top:10px"><strong>Production setup</strong><p style="font-size:12px;color:var(--muted);line-height:1.6">Connect the forms to Supabase Auth + Database, enable Row Level Security, and keep service-role keys on the server.</p></div>`)
-}
-function openDrawer(html){document.getElementById('drawer').innerHTML=html;document.getElementById('drawer').classList.add('show');document.getElementById('drawerBackdrop').classList.add('show')}
-function closeDrawer(){document.getElementById('drawer').classList.remove('show');document.getElementById('drawerBackdrop').classList.remove('show')}
-function toggleDark(){
- document.body.classList.toggle('dark');
- const on=document.body.classList.contains('dark');localStorage.setItem('rc_dark',on?'1':'0');
- const s=document.getElementById('darkSwitch');if(s)s.classList.toggle('on',on);
- if(on){document.documentElement.style.setProperty('--paper','#241c19');document.documentElement.style.setProperty('--cream','#171210');document.documentElement.style.setProperty('--ink','#fff5ec');document.documentElement.style.setProperty('--muted','#b8aaa1');document.documentElement.style.setProperty('--line','#463a34')}else{location.reload()}
-}
-function callDonor(name){toast('Call action for '+name)}
-function whatsappDonor(name){toast('WhatsApp action for '+name)}
-function donorHistory(name){openModal(`<div class="modal-head"><h2>${esc(name)}</h2><button class="close" onclick="closeModal()">×</button></div>${data.collections.filter(x=>x.donor===name).map(x=>`<div class="receipt-row"><span>${dateFmt(x.date)} • ${x.method}</span><b>${money(x.amount)}</b></div>`).join('')||'<div class="empty">No history.</div>'}`)}
-function toggleFab(){document.getElementById('fab').classList.toggle('open');document.getElementById('fabMenu').classList.toggle('open')}
-function exportBackup(){
- const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='rc-center-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click();toast('✓ Backup downloaded')
-}
-function exportCSV(){
- let rows=[['Type','Name','Amount','Method/Category','Date','Note'],...data.collections.map(x=>['Collection',x.donor,x.amount,x.method,x.date,x.note||'']),...data.expenses.map(x=>['Expense',x.item,x.amount,x.category,x.date,x.note||''])];
- let csv=rows.map(r=>r.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(',')).join('\n'),a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));a.download='rc-center-data.csv';a.click();toast('✓ CSV exported')
-}
-function restoreBackup(){document.getElementById('restoreInput').click()}
-document.getElementById('restoreInput').addEventListener('change',e=>{let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{try{let x=JSON.parse(r.result);if(!x.collections||!x.expenses)throw 0;data=x;save();toast('✓ Backup restored')}catch(err){toast('Invalid backup file')}};r.readAsText(f)})
 
-let authSignup=false;
-function showAuth(){if(!supabase){openSetup();return}document.getElementById('authScreen').classList.add('show');document.getElementById('cloudStatus').textContent='Supabase connected';}
-function hideAuth(){document.getElementById('authScreen').classList.remove('show')}
-function toggleAuthMode(){authSignup=!authSignup;document.getElementById('authButton').textContent=authSignup?'Create Account':'Sign In';document.getElementById('authToggle').textContent=authSignup?'Already have an account? Sign in':'Create account'}
-async function authSubmit(e){e.preventDefault();if(!supabase){openSetup();return}const email=document.getElementById('authEmail').value.trim(),password=document.getElementById('authPassword').value;document.getElementById('authButton').disabled=true;let r=authSignup?await supabase.auth.signUp({email,password}):await supabase.auth.signInWithPassword({email,password});document.getElementById('authButton').disabled=false;if(r.error){toast(r.error.message);return}if(authSignup&&!r.data.session){toast('Check your email to confirm your account');return}currentUser=r.data.user;hideAuth();await loadCloud();toast('✓ Signed in securely')}
-async function signOut(){if(supabase)await supabase.auth.signOut();currentUser=null;showAuth()}
-function openSetup(){openModal(`<div class="modal-head"><h2>☁ Connect Supabase</h2><button class="close" onclick="closeModal()">×</button></div><p style="font-size:12px;color:var(--muted);line-height:1.6">Paste your Supabase Project URL and Publishable Key. These are safe for browser use when Row Level Security is configured. Never paste a secret/service-role key here.</p><form class="form" onsubmit="saveSetup(event)"><div class="field"><label>PROJECT URL</label><input id="sbUrl" required placeholder="https://xxxxx.supabase.co" value="${esc(SUPABASE_URL)}"></div><div class="field"><label>PUBLISHABLE KEY</label><input id="sbKey" required placeholder="sb_publishable_…" value="${esc(SUPABASE_KEY)}"></div><div class="form-actions"><button type="button" class="secondary" onclick="closeModal()">Cancel</button><button class="primary">Connect</button></div></form>`)}
-function saveSetup(e){e.preventDefault();localStorage.setItem('rc_supabase_url',document.getElementById('sbUrl').value.trim());localStorage.setItem('rc_supabase_key',document.getElementById('sbKey').value.trim());toast('Saved. Reloading…');setTimeout(()=>location.reload(),500)}
+function escapeHTML(value) {
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
 
-function initDark(){if(localStorage.getItem('rc_dark')==='1'){document.body.classList.add('dark');document.documentElement.style.setProperty('--paper','#241c19');document.documentElement.style.setProperty('--cream','#171210');document.documentElement.style.setProperty('--ink','#fff5ec');document.documentElement.style.setProperty('--muted','#b8aaa1');document.documentElement.style.setProperty('--line','#463a34')}}
-initDark();renderAll();
-(async()=>{
- if(!supabase){document.getElementById('cloudStatus').textContent='Supabase not configured';return;}
- const {data:{session}}=await supabase.auth.getSession();
- if(session){currentUser=session.user;hideAuth();await loadCloud();}else showAuth();
- supabase.auth.onAuthStateChange(async(_event,session)=>{currentUser=session?.user||null;if(currentUser){hideAuth();await loadCloud()}else showAuth()});
-})();
+
+/* ---------------------------------------------------------
+   STATUS
+--------------------------------------------------------- */
+
+function setStatus(message, type = "") {
+
+    const box = $("status");
+
+    box.textContent = message;
+
+    box.className = "status";
+
+    if (type) {
+        box.classList.add(type);
+    }
+}
+
+
+/* ---------------------------------------------------------
+   SUPABASE CONNECTION
+--------------------------------------------------------- */
+
+function getSupabaseConfig() {
+
+    const url =
+        localStorage.getItem(URL_STORAGE_KEY) ||
+        DEFAULT_SUPABASE_URL;
+
+    const key =
+        localStorage.getItem(KEY_STORAGE_KEY) ||
+        DEFAULT_SUPABASE_KEY;
+
+    return {
+        url: url.trim(),
+        key: key.trim()
+    };
+}
+
+
+function initializeSupabase() {
+
+    const config = getSupabaseConfig();
+
+    if (!config.url || !config.key) {
+
+        supabaseClient = null;
+
+        updateCloudStatus();
+
+        return false;
+    }
+
+    try {
+
+        supabaseClient =
+            window.supabase.createClient(
+                config.url,
+                config.key,
+                {
+                    auth: {
+                        persistSession: true,
+                        autoRefreshToken: true,
+                        detectSessionInUrl: true
+                    }
+                }
+            );
+
+        updateCloudStatus();
+
+        return true;
+
+    } catch (error) {
+
+        console.error(error);
+
+        supabaseClient = null;
+
+        setStatus(
+            "Supabase connection error: " + error.message,
+            "error"
+        );
+
+        return false;
+    }
+}
+
+
+/* ---------------------------------------------------------
+   CLOUD STATUS
+--------------------------------------------------------- */
+
+function updateCloudStatus() {
+
+    if (supabaseClient) {
+
+        $("cloudStatus").textContent =
+            "Connected to Supabase";
+
+    } else {
+
+        $("cloudStatus").textContent =
+            "Not configured";
+    }
+
+    if (currentUser) {
+
+        $("currentAccount").textContent =
+            currentUser.email;
+
+    } else {
+
+        $("currentAccount").textContent =
+            "Not logged in";
+    }
+}
+
+
+/* ---------------------------------------------------------
+   ADMIN
+--------------------------------------------------------- */
+
+function checkAdmin(user) {
+
+    if (!user || !user.email) {
+        return false;
+    }
+
+    /*
+    Only the configured admin email receives the admin UI.
+
+    IMPORTANT:
+    For production security, your Supabase RLS policies
+    should ALSO enforce admin permissions.
+    */
+
+    return (
+        ADMIN_EMAIL !== "YOUR_ADMIN_EMAIL@example.com" &&
+        user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()
+    );
+}
+
+
+function updateUIForUser() {
+
+    isAdmin = checkAdmin(currentUser);
+
+    document
+        .querySelectorAll(".admin-only")
+        .forEach(element => {
+
+            if (isAdmin) {
+                element.classList.remove("hidden");
+            } else {
+                element.classList.add("hidden");
+            }
+
+        });
+
+    if (currentUser) {
+
+        $("authButton").classList.add("hidden");
+        $("logoutButton").classList.remove("hidden");
+
+    } else {
+
+        $("authButton").classList.remove("hidden");
+        $("logoutButton").classList.add("hidden");
+    }
+
+    updateCloudStatus();
+
+    renderTables();
+}
+
+
+/* ---------------------------------------------------------
+   AUTH MODAL
+--------------------------------------------------------- */
+
+function openAuth() {
+
+    if (!supabaseClient) {
+
+        setStatus(
+            "Configure Supabase first from Settings.",
+            "warning"
+        );
+
+        openSettings();
+
+        return;
+    }
+
+    $("authModal").classList.remove("hidden");
+}
+
+
+function closeAuth() {
+
+    $("authModal").classList.add("hidden");
+    $("authMessage").classList.add("hidden");
+}
+
+
+function switchAuth(mode) {
+
+    authMode = mode;
+
+    if (mode === "login") {
+
+        $("loginTab").classList.add("active");
+        $("signupTab").classList.remove("active");
+
+        $("authSubmit").textContent = "Login";
+
+    } else {
+
+        $("signupTab").classList.add("active");
+        $("loginTab").classList.remove("active");
+
+        $("authSubmit").textContent = "Create Account";
+    }
+
+    $("authMessage").classList.add("hidden");
+}
+
+
+function showAuthMessage(message, error = false) {
+
+    const box = $("authMessage");
+
+    box.textContent = message;
+
+    box.classList.remove("hidden");
+
+    box.style.background =
+        error ? "#fee2e2" : "#dcfce7";
+
+    box.style.color =
+        error ? "#991b1b" : "#166534";
+}
+
+
+/* ---------------------------------------------------------
+   SIGNUP / LOGIN
+--------------------------------------------------------- */
+
+$("authForm").addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    if (!supabaseClient) {
+
+        showAuthMessage(
+            "Supabase is not configured.",
+            true
+        );
+
+        return;
+    }
+
+    const email =
+        $("authEmail").value.trim();
+
+    const password =
+        $("authPassword").value;
+
+    const button =
+        $("authSubmit");
+
+    button.disabled = true;
+
+    button.textContent =
+        authMode === "login"
+            ? "Logging in..."
+            : "Creating account...";
+
+    try {
+
+        if (authMode === "signup") {
+
+            const result =
+                await supabaseClient.auth.signUp({
+                    email,
+                    password
+                });
+
+            if (result.error) {
+                throw result.error;
+            }
+
+            if (!result.data.session) {
+
+                showAuthMessage(
+                    "Account created. Check your email and confirm your account before logging in."
+                );
+
+            } else {
+
+                currentUser =
+                    result.data.user;
+
+                closeAuth();
+
+                await afterLogin();
+            }
+
+        } else {
+
+            const result =
+                await supabaseClient.auth.signInWithPassword({
+                    email,
+                    password
+                });
+
+            if (result.error) {
+                throw result.error;
+            }
+
+            currentUser =
+                result.data.user;
+
+            closeAuth();
+
+            await afterLogin();
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        showAuthMessage(
+            error.message || "Authentication failed.",
+            true
+        );
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent =
+            authMode === "login"
+                ? "Login"
+                : "Create Account";
+    }
+});
+
+
+/* ---------------------------------------------------------
+   AFTER LOGIN
+--------------------------------------------------------- */
+
+async function afterLogin() {
+
+    updateUIForUser();
+
+    if (!currentUser) {
+        return;
+    }
+
+    setStatus(
+        "Logged in as " +
+        currentUser.email +
+        ". Loading cloud data..."
+    );
+
+    if (isAdmin) {
+
+        setStatus(
+            "Admin login successful. Loading cloud data..."
+        );
+
+    } else {
+
+        setStatus(
+            "Logged in. Loading cloud data..."
+        );
+    }
+
+    await loadCloud();
+
+    if (isAdmin) {
+
+        setStatus(
+            "Admin dashboard connected to Supabase.",
+            "success"
+        );
+
+    } else {
+
+        setStatus(
+            "Cloud data loaded successfully.",
+            "success"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   LOGOUT
+--------------------------------------------------------- */
+
+async function logout() {
+
+    if (!supabaseClient) {
+        return;
+    }
+
+    try {
+
+        const result =
+            await supabaseClient.auth.signOut();
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        currentUser = null;
+        isAdmin = false;
+
+        collections = [];
+        expenses = [];
+
+        updateUIForUser();
+        renderTables();
+
+        setStatus(
+            "Logged out successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "Logout failed: " + error.message,
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   AUTH SESSION
+--------------------------------------------------------- */
+
+async function restoreSession() {
+
+    if (!supabaseClient) {
+
+        updateUIForUser();
+
+        setStatus(
+            "Supabase is not configured. Open Settings to connect.",
+            "warning"
+        );
+
+        return;
+    }
+
+    try {
+
+        const result =
+            await supabaseClient.auth.getSession();
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        const session =
+            result.data.session;
+
+        if (session && session.user) {
+
+            currentUser =
+                session.user;
+
+            await afterLogin();
+
+        } else {
+
+            currentUser = null;
+
+            updateUIForUser();
+
+            setStatus(
+                "Supabase connected. Please login.",
+                "success"
+            );
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "Could not restore login session: " +
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   AUTH STATE LISTENER
+--------------------------------------------------------- */
+
+function setupAuthListener() {
+
+    if (!supabaseClient) {
+        return;
+    }
+
+    supabaseClient.auth.onAuthStateChange(
+        async function(event, session) {
+
+            console.log(
+                "Auth event:",
+                event
+            );
+
+            if (session && session.user) {
+
+                currentUser =
+                    session.user;
+
+                updateUIForUser();
+
+            } else {
+
+                currentUser = null;
+                isAdmin = false;
+
+                updateUIForUser();
+            }
+        }
+    );
+}
+
+
+/* ---------------------------------------------------------
+   LOAD CLOUD DATA
+--------------------------------------------------------- */
+
+async function loadCloud() {
+
+    if (!supabaseClient) {
+
+        setStatus(
+            "Supabase is not connected.",
+            "warning"
+        );
+
+        return;
+    }
+
+    if (!currentUser) {
+
+        setStatus(
+            "Please login before loading cloud data.",
+            "warning"
+        );
+
+        return;
+    }
+
+    try {
+
+        setStatus(
+            "Loading collections and expenses from Supabase..."
+        );
+
+        const [
+            collectionsResult,
+            expensesResult
+        ] = await Promise.all([
+
+            supabaseClient
+                .from("collections")
+                .select("*")
+                .order("date", {
+                    ascending: false
+                })
+                .order("created_at", {
+                    ascending: false
+                }),
+
+            supabaseClient
+                .from("expenses")
+                .select("*")
+                .order("date", {
+                    ascending: false
+                })
+                .order("created_at", {
+                    ascending: false
+                })
+
+        ]);
+
+        if (collectionsResult.error) {
+            throw collectionsResult.error;
+        }
+
+        if (expensesResult.error) {
+            throw expensesResult.error;
+        }
+
+        collections =
+            collectionsResult.data || [];
+
+        expenses =
+            expensesResult.data || [];
+
+        renderAll();
+
+        setStatus(
+            "Cloud data loaded successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Cloud loading error:",
+            error
+        );
+
+        setStatus(
+            "Cloud loading failed: " +
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   SAVE COLLECTION TO CLOUD
+--------------------------------------------------------- */
+
+async function saveCollectionToCloud(data) {
+
+    if (!supabaseClient || !currentUser) {
+
+        throw new Error(
+            "You must be logged in to save cloud data."
+        );
+    }
+
+    const row = {
+        donor: data.donor,
+        amount: Number(data.amount),
+        method: data.method,
+        date: data.date,
+        note: data.note || "",
+        user_id: currentUser.id
+    };
+
+    const result =
+        await supabaseClient
+            .from("collections")
+            .insert([row])
+            .select()
+            .single();
+
+    if (result.error) {
+        throw result.error;
+    }
+
+    return result.data;
+}
+
+
+/* ---------------------------------------------------------
+   SAVE EXPENSE TO CLOUD
+--------------------------------------------------------- */
+
+async function saveExpenseToCloud(data) {
+
+    if (!supabaseClient || !currentUser) {
+
+        throw new Error(
+            "You must be logged in to save cloud data."
+        );
+    }
+
+    const row = {
+        item: data.item,
+        amount: Number(data.amount),
+        category: data.category,
+        date: data.date,
+        note: data.note || "",
+        user_id: currentUser.id
+    };
+
+    const result =
+        await supabaseClient
+            .from("expenses")
+            .insert([row])
+            .select()
+            .single();
+
+    if (result.error) {
+        throw result.error;
+    }
+
+    return result.data;
+}
+
+
+/* ---------------------------------------------------------
+   COLLECTION FORM
+--------------------------------------------------------- */
+
+$("collectionForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        if (!currentUser) {
+
+            setStatus(
+                "Please login first.",
+                "warning"
+            );
+
+            openAuth();
+
+            return;
+        }
+
+        if (!isAdmin) {
+
+            setStatus(
+                "Admin permission required to add donations.",
+                "error"
+            );
+
+            return;
+        }
+
+        const data = {
+
+            donor:
+                $("donor").value.trim(),
+
+            amount:
+                Number($("collectionAmount").value),
+
+            method:
+                $("collectionMethod").value,
+
+            date:
+                $("collectionDate").value,
+
+            note:
+                $("collectionNote").value.trim()
+        };
+
+        if (!data.donor || data.amount <= 0 || !data.date) {
+
+            setStatus(
+                "Please enter valid collection details.",
+                "warning"
+            );
+
+            return;
+        }
+
+        try {
+
+            setStatus(
+                "Saving donation to Supabase..."
+            );
+
+            const saved =
+                await saveCollectionToCloud(data);
+
+            collections.unshift(saved);
+
+            renderAll();
+
+            resetCollectionForm();
+
+            setStatus(
+                "Donation saved to cloud successfully.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            setStatus(
+                "Donation save failed: " +
+                error.message,
+                "error"
+            );
+        }
+    }
+);
+
+
+/* ---------------------------------------------------------
+   EXPENSE FORM
+--------------------------------------------------------- */
+
+$("expenseForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        if (!currentUser) {
+
+            setStatus(
+                "Please login first.",
+                "warning"
+            );
+
+            openAuth();
+
+            return;
+        }
+
+        if (!isAdmin) {
+
+            setStatus(
+                "Admin permission required to add expenses.",
+                "error"
+            );
+
+            return;
+        }
+
+        const data = {
+
+            item:
+                $("expenseItem").value.trim(),
+
+            amount:
+                Number($("expenseAmount").value),
+
+            category:
+                $("expenseCategory").value,
+
+            date:
+                $("expenseDate").value,
+
+            note:
+                $("expenseNote").value.trim()
+        };
+
+        if (!data.item || data.amount <= 0 || !data.date) {
+
+            setStatus(
+                "Please enter valid expense details.",
+                "warning"
+            );
+
+            return;
+        }
+
+        try {
+
+            setStatus(
+                "Saving expense to Supabase..."
+            );
+
+            const saved =
+                await saveExpenseToCloud(data);
+
+            expenses.unshift(saved);
+
+            renderAll();
+
+            resetExpenseForm();
+
+            setStatus(
+                "Expense saved to cloud successfully.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            setStatus(
+                "Expense save failed: " +
+                error.message,
+                "error"
+            );
+        }
+    }
+);
+
+
+/* ---------------------------------------------------------
+   DELETE COLLECTION
+--------------------------------------------------------- */
+
+async function deleteCollection(id) {
+
+    if (!isAdmin) {
+
+        setStatus(
+            "Admin permission required.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!confirm(
+        "Are you sure you want to delete this collection?"
+    )) {
+        return;
+    }
+
+    try {
+
+        setStatus(
+            "Deleting collection from cloud..."
+        );
+
+        const result =
+            await supabaseClient
+                .from("collections")
+                .delete()
+                .eq("id", id);
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        collections =
+            collections.filter(
+                item => Number(item.id) !== Number(id)
+            );
+
+        renderAll();
+
+        setStatus(
+            "Collection deleted successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "Delete failed: " +
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   DELETE EXPENSE
+--------------------------------------------------------- */
+
+async function deleteExpense(id) {
+
+    if (!isAdmin) {
+
+        setStatus(
+            "Admin permission required.",
+            "error"
+        );
+
+        return;
+    }
+
+    if (!confirm(
+        "Are you sure you want to delete this expense?"
+    )) {
+        return;
+    }
+
+    try {
+
+        setStatus(
+            "Deleting expense from cloud..."
+        );
+
+        const result =
+            await supabaseClient
+                .from("expenses")
+                .delete()
+                .eq("id", id);
+
+        if (result.error) {
+            throw result.error;
+        }
+
+        expenses =
+            expenses.filter(
+                item => Number(item.id) !== Number(id)
+            );
+
+        renderAll();
+
+        setStatus(
+            "Expense deleted successfully.",
+            "success"
+        );
+
+    } catch (error) {
+
+        console.error(error);
+
+        setStatus(
+            "Delete failed: " +
+            error.message,
+            "error"
+        );
+    }
+}
+
+
+/* ---------------------------------------------------------
+   EDIT COLLECTION
+--------------------------------------------------------- */
+
+function editCollection(id) {
+
+    if (!isAdmin) {
+        return;
+    }
+
+    const item =
+        collections.find(
+            row => Number(row.id) === Number(id)
+        );
+
+    if (!item) {
+        return;
+    }
+
+    $("editCollectionId").value =
+        item.id;
+
+    $("editDonor").value =
+        item.donor || "";
+
+    $("editCollectionAmount").value =
+        item.amount || "";
+
+    $("editCollectionMethod").value =
+        item.method || "UPI";
+
+    $("editCollectionDate").value =
+        item.date || "";
+
+    $("editCollectionNote").value =
+        item.note || "";
+
+    $("editCollectionModal")
+        .classList.remove("hidden");
+}
+
+
+function closeEditCollection() {
+
+    $("editCollectionModal")
+        .classList.add("hidden");
+}
+
+
+$("editCollectionForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        if (!isAdmin) {
+            return;
+        }
+
+        const id =
+            $("editCollectionId").value;
+
+        const updated = {
+
+            donor:
+                $("editDonor").value.trim(),
+
+            amount:
+                Number($("editCollectionAmount").value),
+
+            method:
+                $("editCollectionMethod").value,
+
+            date:
+                $("editCollectionDate").value,
+
+            note:
+                $("editCollectionNote").value.trim()
+        };
+
+        try {
+
+            setStatus(
+                "Updating collection..."
+            );
+
+            const result =
+                await supabaseClient
+                    .from("collections")
+                    .update(updated)
+                    .eq("id", id)
+                    .select()
+                    .single();
+
+            if (result.error) {
+                throw result.error;
+            }
+
+            const index =
+                collections.findIndex(
+                    item => Number(item.id) === Number(id)
+                );
+
+            if (index !== -1) {
+                collections[index] =
+                    result.data;
+            }
+
+            closeEditCollection();
+
+            renderAll();
+
+            setStatus(
+                "Collection updated successfully.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            setStatus(
+                "Update failed: " +
+                error.message,
+                "error"
+            );
+        }
+    }
+);
+
+
+/* ---------------------------------------------------------
+   EDIT EXPENSE
+--------------------------------------------------------- */
+
+function editExpense(id) {
+
+    if (!isAdmin) {
+        return;
+    }
+
+    const item =
+        expenses.find(
+            row => Number(row.id) === Number(id)
+        );
+
+    if (!item) {
+        return;
+    }
+
+    $("editExpenseId").value =
+        item.id;
+
+    $("editExpenseItem").value =
+        item.item || "";
+
+    $("editExpenseAmount").value =
+        item.amount || "";
+
+    $("editExpenseCategory").value =
+        item.category || "Other";
+
+    $("editExpenseDate").value =
+        item.date || "";
+
+    $("editExpenseNote").value =
+        item.note || "";
+
+    $("editExpenseModal")
+        .classList.remove("hidden");
+}
+
+
+function closeEditExpense() {
+
+    $("editExpenseModal")
+        .classList.add("hidden");
+}
+
+
+$("editExpenseForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        if (!isAdmin) {
+            return;
+        }
+
+        const id =
+            $("editExpenseId").value;
+
+        const updated = {
+
+            item:
+                $("editExpenseItem").value.trim(),
+
+            amount:
+                Number($("editExpenseAmount").value),
+
+            category:
+                $("editExpenseCategory").value,
+
+            date:
+                $("editExpenseDate").value,
+
+            note:
+                $("editExpenseNote").value.trim()
+        };
+
+        try {
+
+            setStatus(
+                "Updating expense..."
+            );
+
+            const result =
+                await supabaseClient
+                    .from("expenses")
+                    .update(updated)
+                    .eq("id", id)
+                    .select()
+                    .single();
+
+            if (result.error) {
+                throw result.error;
+            }
+
+            const index =
+                expenses.findIndex(
+                    item => Number(item.id) === Number(id)
+                );
+
+            if (index !== -1) {
+                expenses[index] =
+                    result.data;
+            }
+
+            closeEditExpense();
+
+            renderAll();
+
+            setStatus(
+                "Expense updated successfully.",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.error(error);
+
+            setStatus(
+                "Update failed: " +
+                error.message,
+                "error"
+            );
+        }
+    }
+);
+
+
+/* ---------------------------------------------------------
+   RENDER DASHBOARD
+--------------------------------------------------------- */
+
+function renderDashboard() {
+
+    const totalCollections =
+        collections.reduce(
+            (sum, item) =>
+                sum + Number(item.amount || 0),
+            0
+        );
+
+    const totalExpenses =
+        expenses.reduce(
+            (sum, item) =>
+                sum + Number(item.amount || 0),
+            0
+        );
+
+    const balance =
+        totalCollections -
+        totalExpenses;
+
+    $("totalCollections").textContent =
+        formatMoney(totalCollections);
+
+    $("totalExpenses").textContent =
+        formatMoney(totalExpenses);
+
+    $("balance").textContent =
+        formatMoney(balance);
+
+    $("balance").classList.remove(
+        "green",
+        "red"
+    );
+
+    $("balance").classList.add(
+        balance >= 0 ? "green" : "red"
+    );
+}
+
+
+/* ---------------------------------------------------------
+   RENDER COLLECTION TABLE
+--------------------------------------------------------- */
+
+function renderCollections() {
+
+    const table =
+        $("collectionsTable");
+
+    if (!collections.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    No collections found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    table.innerHTML =
+        collections.map(item => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(item.donor)}
+                </td>
+
+                <td>
+                    <strong>
+                        ${formatMoney(item.amount)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(item.method)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.date)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.note || "-")}
+                </td>
+
+                <td class="${isAdmin ? "" : "hidden"}">
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary btn-small"
+                            onclick="editCollection(${item.id})">
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteCollection(${item.id})">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `).join("");
+}
+
+
+/* ---------------------------------------------------------
+   RENDER EXPENSE TABLE
+--------------------------------------------------------- */
+
+function renderExpenses() {
+
+    const table =
+        $("expensesTable");
+
+    if (!expenses.length) {
+
+        table.innerHTML = `
+            <tr>
+                <td colspan="6" class="empty">
+                    No expenses found.
+                </td>
+            </tr>
+        `;
+
+        return;
+    }
+
+    table.innerHTML =
+        expenses.map(item => `
+
+            <tr>
+
+                <td>
+                    ${escapeHTML(item.item)}
+                </td>
+
+                <td>
+                    <strong>
+                        ${formatMoney(item.amount)}
+                    </strong>
+                </td>
+
+                <td>
+                    ${escapeHTML(item.category)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.date)}
+                </td>
+
+                <td>
+                    ${escapeHTML(item.note || "-")}
+                </td>
+
+                <td class="${isAdmin ? "" : "hidden"}">
+
+                    <div class="actions">
+
+                        <button
+                            class="btn btn-primary btn-small"
+                            onclick="editExpense(${item.id})">
+                            Edit
+                        </button>
+
+                        <button
+                            class="btn btn-danger btn-small"
+                            onclick="deleteExpense(${item.id})">
+                            Delete
+                        </button>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `).join("");
+}
+
+
+/* ---------------------------------------------------------
+   RENDER ALL
+--------------------------------------------------------- */
+
+function renderTables() {
+
+    renderDashboard();
+    renderCollections();
+    renderExpenses();
+}
+
+
+function renderAll() {
+
+    renderTables();
+    updateUIForUser();
+}
+
+
+/* ---------------------------------------------------------
+   RESET FORMS
+--------------------------------------------------------- */
+
+function resetCollectionForm() {
+
+    $("collectionForm").reset();
+
+    $("collectionDate").value =
+        today();
+}
+
+
+function resetExpenseForm() {
+
+    $("expenseForm").reset();
+
+    $("expenseDate").value =
+        today();
+}
+
+
+/* ---------------------------------------------------------
+   SETTINGS
+--------------------------------------------------------- */
+
+function openSettings() {
+
+    const config =
+        getSupabaseConfig();
+
+    $("supabaseUrl").value =
+        config.url;
+
+    $("supabaseKey").value =
+        config.key;
+
+    updateCloudStatus();
+
+    $("settingsModal")
+        .classList.remove("hidden");
+}
+
+
+function closeSettings() {
+
+    $("settingsModal")
+        .classList.add("hidden");
+}
+
+
+$("settingsForm").addEventListener(
+    "submit",
+    async function(event) {
+
+        event.preventDefault();
+
+        const url =
+            $("supabaseUrl").value.trim();
+
+        const key =
+            $("supabaseKey").value.trim();
+
+        if (!url || !key) {
+
+            setStatus(
+                "Supabase URL and key are required.",
+                "warning"
+            );
+
+            return;
+        }
+
+        if (!url.startsWith("https://")) {
+
+            setStatus(
+                "Supabase URL must start with https://",
+                "warning"
+            );
+
+            return;
+        }
+
+        try {
+
+            localStorage.setItem(
+                URL_STORAGE_KEY,
+                url
+            );
+
+            localStorage.setItem(
+                KEY_STORAGE_KEY,
+                key
+            );
+
+            /*
+            Recreate the Supabase client with
+            the newly supplied credentials.
+            */
+
+            if (!initializeSupabase()) {
+
+                throw new Error(
+                    "Supabase initialization failed."
+                );
+            }
+
+            setupAuthListener();
+
+            closeSettings();
+
+            setStatus(
+                "Supabase connection saved. Checking login..."
+            );
+
+            await restoreSession();
+
+        } catch (error) {
+
+            console.error(error);
+
+            setStatus(
+                "Connection setup failed: " +
+                error.message,
+                "error"
+            );
+        }
+    }
+);
+
+
+/* ---------------------------------------------------------
+   INITIALIZE APPLICATION
+--------------------------------------------------------- */
+
+async function initializeApp() {
+
+    console.log(
+        "RC Center application starting..."
+    );
+
+    $("collectionDate").value =
+        today();
+
+    $("expenseDate").value =
+        today();
+
+    renderAll();
+
+    const connected =
+        initializeSupabase();
+
+    if (!connected) {
+
+        updateUIForUser();
+
+        setStatus(
+            "Supabase is not configured. Open Settings and enter your Supabase publishable key.",
+            "warning"
+        );
+
+        return;
+    }
+
+    setupAuthListener();
+
+    await restoreSession();
+}
+
+
+/* ---------------------------------------------------------
+   START
+--------------------------------------------------------- */
+
+initializeApp();
+
 </script>
+
 </body>
 </html>
